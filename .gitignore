@@ -1,5 +1,9 @@
-Indicadores/apreensao_droga.zip
-Indicadores/apreensao_droga_2018_2019-06-GVG.csv
-Indicadores/apreensao_droga_2019-07_2019-12-GVG.csv
-Indicadores/apreensao_droga_2020-01_2020-06-GVG.csv
-Indicadores/apreensao_droga_2020-07_2020-12-GVG.csv
+Indicadores/dados/
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
