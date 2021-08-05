@@ -1,0 +1,1 @@
+conda activate projeto_drogas && jupyter notebook
