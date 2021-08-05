@@ -26,14 +26,17 @@ resultado = resultado.rename(columns={"NRO_INT_OBJETO": "CHAVE_OBJETO", "TIPO_OB
 #resultado['Peso Unitário'] = pd.to_numeric(resultado['Peso Unitário'], errors='coerce')
 #resultado['Peso Total'] = pd.to_numeric(resultado['Peso Total'], errors='coerce')
 
-def ajusta_texto_numerico(texto):
-    return str(texto).replace('.', '').replace(',', '.')
+resultado['Peso Unitário'] = pd.to_numeric(resultado['Peso Unitário'].str.replace(',','.'), errors='coerce',downcast="float")
+resultado['Peso Total'] = pd.to_numeric(resultado['Peso Total'].str.replace(',','.'), errors='coerce',downcast="float")
 
-resultado['Peso Unitário'] = resultado['Peso Unitário'].apply(ajusta_texto_numerico)
-resultado['Peso Total'] = resultado['Peso Total'].apply(ajusta_texto_numerico)
+#Trocando dados NaN por 0
+resultado['Peso Unitário'] = resultado['Peso Unitário'].fillna(0)
+resultado['Peso Total'] = resultado['Peso Total'].fillna(0)
 
-resultado['Peso Unitário'] = pd.to_numeric(resultado['Peso Unitário'], errors='coerce',downcast="float").fillna(0).astype(float)
-resultado['Peso Total'] = pd.to_numeric(resultado['Peso Total'], errors='coerce',downcast="float").fillna(0).astype(float)
+
+#Trocando o tipo de dado para float
+resultado['Peso Total']  = resultado['Peso Total'].astype(float)
+resultado['Peso Unitário']  = resultado['Peso Unitário'].astype(float)
 
 #Criando DF cores a partir de frequência do tipo do Objeto
 cores = resultado['TXT_TIPO_OBJETO'].value_counts()
@@ -83,6 +86,8 @@ plt.title('Tipo de Objeto')
 #Como resultado do tipo de objeto de resultado = Drogas
 Drogas = resultado.loc[resultado['TXT_TIPO_OBJETO'] == 'Drogas']
 
+
+
 Drogas = resultado.loc[resultado['TXT_TIPO_OBJETO'] == 'Drogas']
 Outras = resultado.loc[resultado['TXT_TIPO_OBJETO'] != 'Drogas']
 Outras = Outras.reset_index(drop= True)
@@ -108,6 +113,7 @@ while x < len(Drogas):
 Drogas['Descrição'] = Drogas['Descrição'].str.lower()
 
 #Tratando ajustes de drogas
+
 def analizer(x):
     
     if 'maconha' in x:
@@ -124,9 +130,6 @@ def analizer(x):
         return 'Drogas'
     
 Drogas['RECLASSIFICAÇÃO'] = Drogas['Descrição'].apply(analizer)
-
-listaDrogas = [Drogas, DrogasNA]
-Drogas = pd.concat(listaDrogas)
 
 stores_df = Drogas
 
