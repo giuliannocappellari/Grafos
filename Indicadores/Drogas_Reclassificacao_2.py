@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 pd.set_option('display.max_rows', 1000)
 import seaborn as sns
 import unidecode
+# teste
 
 #Lendo dados
 drogas_final = pd.read_csv('Dados/GESEG_SBX_DROGA_EXPORT.csv', encoding = 'latin-1', sep = ';', index_col=0)
